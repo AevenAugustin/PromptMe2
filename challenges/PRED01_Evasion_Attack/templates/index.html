@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>AI Anti-Fraud Terminal</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Vérification de Transaction IA</h1>
+        <p class="subtitle">Objectif : Faire accepter une transaction de plus de 2000€ par le modèle.</p>
+        
+        <div class="login-form">
+            <div class="form-group">
+                <label>Montant de la transaction (€)</label>
+                <input type="number" id="amount" value="2500">
+            </div>
+            <div class="form-group">
+                <label>Distance du dernier achat (km)</label>
+                <input type="number" id="distance" value="500">
+            </div>
+            <div class="form-group">
+                <label>Vitesse de saisie (sec)</label>
+                <input type="number" id="velocity" value="1">
+            </div>
+            <button onclick="sendData()">ANALYSER</button>
+        </div>
+
+        <div id="result-box" style="margin-top:20px; text-align:center; display:none;">
+            <div class="message assistant">
+                <p id="status-text"></p>
+                <p id="conf-text"></p>
+                <p id="flag-text" class="flag"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function sendData() {
+            const payload = {
+                amount: document.getElementById('amount').value,
+                distance: document.getElementById('distance').value,
+                velocity: document.getElementById('velocity').value
+            };
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            });
+            const data = await response.json();
+            document.getElementById('result-box').style.display = 'block';
+            document.getElementById('status-text').innerText = "Verdict : " + data.status;
+            document.getElementById('conf-text').innerText = "Confiance : " + (data.confidence * 100) + "%";
+            if(data.flag) document.getElementById('flag-text').innerText = "Bravo ! " + data.flag;
+            else document.getElementById('flag-text').innerText = "";
+        }
+    </script>
+</body>
+</html>
