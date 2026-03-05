@@ -43,7 +43,8 @@ def dashboard():
         { 'id': 7, 'title': 'System Prompt Leakage', 'icon': 'fas fa-file-alt' },
         { 'id': 8, 'title': 'Vector & Embedding Weaknesses','icon': 'fas fa-project-diagram' },
         { 'id': 9, 'title': 'Misinformation', 'icon': 'fas fa-bullhorn' },
-        { 'id': 10,'title': 'Unbounded Consumption', 'icon': 'fas fa-infinity' }
+        { 'id': 10,'title': 'Unbounded Consumption', 'icon': 'fas fa-infinity' },
+        { 'id': 11, 'title': 'Evasion Attack (Predictive)', 'icon': 'fas fa-user-ninja' }
     ]
     return render_template('dashboard.html', risks=risks)
 
