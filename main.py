@@ -93,6 +93,9 @@ def start_challenge_route(challenge_id):
     elif challenge_id == 10:
         port = 5010
         app_path = "challenges/LLM10_Unbounded_Consumption/app10.py"
+    elif challenge_id == 11:
+        port = 5011
+        app_path = "challenges/PRED01_Evasion_Attack/app11.py"
     else:
         return "Unknown Challenge ID", 404
 
